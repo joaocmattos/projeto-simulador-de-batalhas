@@ -13,6 +13,8 @@ public class Pokesal {
     private final int velocidade;
     private ItemSegurar itemEquipado;
     private final List<Movimento> movimentos;
+    private StatusPokesal status;
+    private int contadorTurnosVeneno;
 
     public Pokesal(
             String nome,
@@ -34,18 +36,49 @@ public class Pokesal {
         this.velocidade = velocidade;
         this.itemEquipado = itemEquipado;
         this.movimentos = new ArrayList<>(movimentos);
+        this.status = StatusPokesal.NEUTRO;
+        this.contadorTurnosVeneno = 0;
+    }
+
+    public boolean aplicarStatus(StatusPokesal novoStatus) {
+        if (novoStatus == null || novoStatus.equals(StatusPokesal.NEUTRO)) {
+            return false;
+        }
+
+        this.status = novoStatus;
+
+        if (novoStatus.equals(StatusPokesal.ENVENENADO)) {
+            this.contadorTurnosVeneno = 1;
+        }
+
+        return true;
+    }
+
+    public void curarStatus() {
+        this.status = StatusPokesal.NEUTRO;
+        this.contadorTurnosVeneno = 0;
     }
 
     public int getDefesaEfetiva() {
         return (int) Math.round(this.defesa * this.itemEquipado.getModificadorDeDefesa());
     }
 
-    public boolean podeExecutarMovimento(Movimento movimento) {
-        return this.itemEquipado.checarMovimentoPermitido(movimento.isOfensivo());
+    public int getAtaqueEfetivo() {
+        if (this.status == StatusPokesal.QUEIMADO) {
+            return (int) Math.round(this.ataque * 0.5);
+        }
+        return this.ataque;
     }
 
-    public void equiparItem(ItemSegurar item) {
-        this.itemEquipado = item != null ? item : ItemSegurar.NENHUM;
+    public int getVelocidadeEfetiva() {
+        if (this.status == StatusPokesal.PARALISADO) {
+            return (int) Math.round(this.velocidade * 0.5);
+        }
+        return this.velocidade;
+    }
+
+    public boolean podeExecutarMovimento(Movimento movimento) {
+        return this.itemEquipado.checarMovimentoPermitido(movimento.isOfensivo());
     }
 
     public void receberDano(int dano) {
@@ -56,8 +89,18 @@ public class Pokesal {
         this.hpAtual = Math.min(this.hpMaximo, this.hpAtual + cura);
     }
 
+    public void incrementarTurnosVeneno() {
+        if (this.status.equals(StatusPokesal.ENVENENADO)) {
+            this.contadorTurnosVeneno++;
+        }
+    }
+
     public boolean estaDesmaiado() {
         return this.hpAtual <= 0;
+    }
+
+    public void equiparItem(ItemSegurar item) {
+        this.itemEquipado = item != null ? item : ItemSegurar.NENHUM;
     }
 
     public String getNome() {
@@ -94,5 +137,13 @@ public class Pokesal {
 
     public List<Movimento> getMovimentos() {
         return movimentos;
+    }
+
+    public StatusPokesal getStatus() {
+        return status;
+    }
+
+    public int getContadorTurnosVeneno() {
+        return contadorTurnosVeneno;
     }
 }
