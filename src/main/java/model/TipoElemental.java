@@ -22,10 +22,13 @@ public enum TipoElemental {
     static {
         efetividade(PLANTA, AGUA, 2.0);
         efetividade(PLANTA, FOGO, 0.5);
+        efetividade(PLANTA, PLANTA, 0.5);
         efetividade(FOGO, PLANTA, 2.0);
         efetividade(FOGO, AGUA, 0.5);
+        efetividade(FOGO, FOGO, 0.5);
         efetividade(AGUA, FOGO, 2.0);
         efetividade(AGUA, PLANTA, 0.5);
+        efetividade(AGUA, AGUA, 0.5);
     }
 
     public static double obterMultiplicador(TipoElemental atacante, TipoElemental defensor) {
