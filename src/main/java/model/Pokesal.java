@@ -41,7 +41,11 @@ public class Pokesal {
     }
 
     public boolean aplicarStatus(StatusPokesal novoStatus) {
-        if (novoStatus == null || novoStatus.equals(StatusPokesal.NEUTRO)) {
+        if (
+                novoStatus == null
+                        || novoStatus == StatusPokesal.NEUTRO
+                        || this.status != StatusPokesal.NEUTRO
+        ) {
             return false;
         }
 
@@ -85,8 +89,12 @@ public class Pokesal {
         this.hpAtual = Math.max(0, this.hpAtual - dano);
     }
 
-    public void curar(int cura) {
+    public boolean curar(int cura) {
+        if (this.hpAtual >= this.hpMaximo || this.estaDesmaiado()) {
+            return false;
+        }
         this.hpAtual = Math.min(this.hpMaximo, this.hpAtual + cura);
+        return true;
     }
 
     public void incrementarTurnosVeneno() {
