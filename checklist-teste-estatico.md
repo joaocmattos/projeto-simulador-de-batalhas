@@ -51,4 +51,4 @@ Assinaturas:
 
 João Gilberto: _______________________
 
-João Pedro: _______________________
+João Pedro: João Pedro de Mattos Cunha
