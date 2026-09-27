@@ -49,6 +49,6 @@ Sim. O `Main.java` usa um limite de turnos como proteção contra loop infinito,
 
 Assinaturas:
 
-João Gilberto: _______________________
+João Gilberto: João Gilberto Pereira dos Santos
 
 João Pedro: João Pedro de Mattos Cunha
