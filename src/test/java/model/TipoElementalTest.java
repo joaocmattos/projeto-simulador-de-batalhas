@@ -2,11 +2,9 @@ package model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static model.TipoElemental.PLANTA;
-import static model.TipoElemental.FOGO;
-import static model.TipoElemental.AGUA;
+import static model.TipoElemental.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TipoElementalTest {
     private static final double DELTA = 0.0001;
