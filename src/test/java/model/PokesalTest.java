@@ -120,4 +120,28 @@ class PokesalTest {
         pokesal.aplicarStatus(StatusPokesal.QUEIMADO);
         assertEquals(13, pokesal.getAtaqueEfetivo());
     }
+
+    @Test
+    void testAplicarEfeitosColeteDeAtaque() {
+        final Movimento movimentoTerreno = new Movimento(
+                "Terreno gramado",
+                TipoElemental.PLANTA,
+                0,
+                Movimento.Categoria.TERRENO
+        );
+        final Movimento movimentoOfensivo = new Movimento(
+                "Folha navalha",
+                TipoElemental.PLANTA,
+                40,
+                Movimento.Categoria.OFENSIVO
+        );
+
+        pokesal.equiparItem(ItemSegurar.COLETE_DE_ATAQUE);
+
+        assertAll(
+                () -> assertEquals(38, pokesal.getDefesaEfetiva()),
+                () -> assertFalse(pokesal.podeExecutarMovimento(movimentoTerreno)),
+                () -> assertTrue(pokesal.podeExecutarMovimento(movimentoOfensivo))
+        );
+    }
 }

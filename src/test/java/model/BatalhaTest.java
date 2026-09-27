@@ -34,11 +34,22 @@ class BatalhaTest {
                 treinador1.getPokesalAtivo().getMovimentos().getFirst(),
                 false
         );
-        assertEquals(48,  danoCalculado);
+        assertEquals(48, danoCalculado);
     }
 
     @Test
     void testOrdemDeAtaquePorVelocidade() {
         assertSame(treinador1, batalha.ordemDeAtaque()[0]);
+    }
+
+    @Test
+    void testCalcularDanoCritico() {
+        int danoComCritico = batalha.calcularDano(
+                treinador1.getPokesalAtivo(),
+                treinador2.getPokesalAtivo(),
+                treinador1.getPokesalAtivo().getMovimentos().getFirst(),
+                true
+        );
+        assertEquals(72, danoComCritico);
     }
 }
